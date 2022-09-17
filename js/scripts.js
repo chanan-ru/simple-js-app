@@ -20,12 +20,17 @@ let pokemonRepository = (function() {
   ];
 
   function add(pokemon) {
-    pokemonList.push(pokemon);
+    if (typeof pokemon === 'object') {
+      if (typeof pokemon.name === 'string' && typeof pokemon.height === 'number' && typeof pokemon.types === 'object') {
+        pokemonList.push(pokemon);
+      }
+    }
   }
 
   function getAll() {
     return pokemonList;
   }
+
 
   return {
     add: add,
@@ -34,16 +39,12 @@ let pokemonRepository = (function() {
 
 })();
 
-pokemonRepository.add(
-  {
+pokemonRepository.add({
   name: 'Bulbasaur',
   height: 0.7,
   types: ['Grass', 'Poison']
-}
-);
+});
 
 pokemonRepository.getAll().forEach(function(pokemon) {
-
   document.write('<p>' + pokemon.name + '</p>');
-
 });
