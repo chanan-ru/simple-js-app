@@ -19,6 +19,8 @@ let pokemonList = [{
 ];
 
 
+/* An example of using For loop
+
 for (let i = 0; i < pokemonList.length; i++) {
   if (pokemonList[i].name != '' && pokemonList[i].height >= 1) {
     document.write('<p>' + pokemonList[i].name + ' (' + pokemonList[i].types + ') is ' + pokemonList[i].height + 'm height. -- Wow!!, that\'s big.</p>');
@@ -29,3 +31,11 @@ for (let i = 0; i < pokemonList.length; i++) {
   }
 
 }
+
+*/
+
+pokemonList.forEach(function(pokemon) {
+
+  document.write('<p>' + pokemon.name + '</p>');
+  
+});
