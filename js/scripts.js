@@ -31,10 +31,35 @@ let pokemonRepository = (function() {
     return pokemonList;
   }
 
+  function addListItem(pokemon){
+    let listOfPokemon = document.querySelector('.pokemon-list');
+    let listItem = document.createElement('li');
+    let button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add('btn-default');
+
+    //AppendChild to its element
+    listItem.appendChild(button);
+    listOfPokemon.appendChild(listItem);
+
+    // Event Listener
+    button.addEventListener('click', function (event) {
+      showDetails();
+    });
+
+  }
+
+  function showDetails(pokemon){
+    console.log(pokemon.name);
+    console.log('Just clicked!');
+  }
+
 
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    addListItem: addListItem,
+    showDetails: showDetails
   };
 
 })();
@@ -45,6 +70,7 @@ pokemonRepository.add({
   types: ['Grass', 'Poison']
 });
 
+
 pokemonRepository.getAll().forEach(function(pokemon) {
-  document.write('<p>' + pokemon.name + '</p>');
+  pokemonRepository.addListItem(pokemon);
 });
