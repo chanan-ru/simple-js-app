@@ -1,7 +1,7 @@
 // IIFE
 let pokemonRepository = (function() {
   let pokemonList = [];
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=5';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1000';
 
   //Variable for Modal
   let modalContainer = document.querySelector('.modal-container');
@@ -72,11 +72,12 @@ let pokemonRepository = (function() {
   }
 
   function loadList() {
-    showLoadingMessage();
-    return fetch(apiUrl).then(function(response) {
 
+    return fetch(apiUrl).then(function(response) {
+      //showLoadingMessage();
       return response.json();
     }).then(function(json2) {
+      //hideLoadingMessage();
       json2.results.forEach(function(item) {
         //.console.log(item);
         let pokemon = {
@@ -96,11 +97,11 @@ let pokemonRepository = (function() {
     let url = item.detailsUrl;
 
     return fetch(url).then(function(response) {
-      showLoadingMessage();
+      //showLoadingMessage();
       return response.json();
 
     }).then(function(details) {
-      hideLoadingMessage();
+      //hideLoadingMessage();
       item.imgUrl = details.sprites.other.dream_world.front_default;
       item.height = details.height;
 
@@ -152,8 +153,8 @@ let pokemonRepository = (function() {
   }
 
   function showLoadingMessage() {
-    console.log('Loading');
-    alert("Hello! I am loading!");
+    console.log('Loading...');
+    //alert("Hello! I am loading!");
 }
 
 function hideLoadingMessage() {
