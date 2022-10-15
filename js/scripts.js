@@ -1,7 +1,7 @@
 // IIFE
 let pokemonRepository = (function() {
   let pokemonList = [];
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=1000';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=10';
 
   //Variable for Modal
   let modalContainer = document.querySelector('.modal-container');
