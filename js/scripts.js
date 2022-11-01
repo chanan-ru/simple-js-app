@@ -19,6 +19,8 @@ let pokemonRepository = (function() {
   function addListItem(pokemon) {
     let listOfPokemon = document.querySelector('.pokemon-list');
     let button = document.createElement('li');
+    let moDal = document.querySelector('.modal');
+    let moDalBody = document.querySelector('.modal-body');
     button.classList.add('list-group-item', 'list-group-item-primary');
     button.setAttribute('type', 'button');
     button.setAttribute('aria-current', 'true');
@@ -31,14 +33,15 @@ let pokemonRepository = (function() {
     listOfPokemon.appendChild(button);
 
     // Event Listener
-    button.addEventListener('click', function(event) {
+    button.addEventListener('click', function() {
       showDetails(pokemon);
     });
 
-    $(".modal").on("hidden.bs.modal", function() {
-      $(".modal-body").html("");
+    moDal.addEventListener('hidden.bs.modal', function() {
+      moDalBody.innerHTML = '';
     });
   }
+
 
   function showDetails(item) {
     pokemonRepository.loadDetails(item).then(function() {
@@ -53,10 +56,8 @@ let pokemonRepository = (function() {
   function loadList() {
 
     return fetch(apiUrl).then(function(response) {
-      //showLoadingMessage();
       return response.json();
     }).then(function(json2) {
-      //hideLoadingMessage();
       json2.results.forEach(function(item) {
         let pokemon = {
           name: item.name,
@@ -74,11 +75,11 @@ let pokemonRepository = (function() {
     let url = item.detailsUrl;
 
     return fetch(url).then(function(response) {
-      //showLoadingMessage();
+      showLoadingMessage();
       return response.json();
 
     }).then(function(details) {
-      //hideLoadingMessage();
+      hideLoadingMessage();
       item.imgUrl = details.sprites.other.dream_world.front_default;
       item.height = details.height;
 
@@ -94,19 +95,31 @@ let pokemonRepository = (function() {
     let titleElement = document.querySelector('#exampleModalLabel');
     titleElement.innerText = title;
 
-    let contentSection = document.querySelector('.modal-body')
+    let contentSection = document.querySelector('.modal-body');
     let contentElement = document.createElement('p');
     contentElement.innerText = 'Height : ' + text;
 
     let contentImg = document.createElement('img');
     contentImg.src = imagePokemon;
 
-
     contentSection.appendChild(contentElement);
     contentSection.appendChild(contentImg);
 
   }
 
+
+  function showLoadingMessage(){
+    let contentSection = document.querySelector('.modal-body');
+    let loading = document.createElement('div');
+    loading.classList.add('loader');
+
+    contentSection.appendChild(loading);
+  }
+
+  function hideLoadingMessage(){
+    let reMoveloader = document.querySelector('.loader');
+    reMoveloader.classList.remove('loader');
+  }
 
 
   return {
