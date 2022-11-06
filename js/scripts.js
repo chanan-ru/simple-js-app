@@ -45,6 +45,7 @@ let pokemonRepository = (function() {
 
   function showDetails(item) {
     pokemonRepository.loadDetails(item).then(function() {
+
       let pokemonName = item.name;
       let pokemonHeight = item.height;
       let pokemonImg = item.imgUrl;
@@ -75,11 +76,11 @@ let pokemonRepository = (function() {
     let url = item.detailsUrl;
 
     return fetch(url).then(function(response) {
-      showLoadingMessage();
+      // showLoadingMessage();
       return response.json();
 
     }).then(function(details) {
-      hideLoadingMessage();
+      // hideLoadingMessage();
       item.imgUrl = details.sprites.other.dream_world.front_default;
       item.height = details.height;
 
@@ -90,30 +91,49 @@ let pokemonRepository = (function() {
 
   // Show modal function
   function showModal(title, text, imagePokemon) {
+      //Modal Content
+      let titleElement = document.querySelector('#exampleModalLabel');
+      titleElement.innerText = title;
 
-    //Modal Content
-    let titleElement = document.querySelector('#exampleModalLabel');
-    titleElement.innerText = title;
+      let contentSection = document.querySelector('.modal-body');
+      let contentElement = document.createElement('p');
+      contentElement.innerText = 'Height : ' + text;
 
-    let contentSection = document.querySelector('.modal-body');
-    let contentElement = document.createElement('p');
-    contentElement.innerText = 'Height : ' + text;
+      let contentImg = document.createElement('img');
+      contentImg.src = imagePokemon;
 
-    let contentImg = document.createElement('img');
-    contentImg.src = imagePokemon;
+      contentSection.appendChild(contentElement);
+      showLoadingMessage();
+      setTimeout(function() {
+        let contentImg = document.createElement('img');
+        contentImg.src = imagePokemon;
 
-    contentSection.appendChild(contentElement);
-    contentSection.appendChild(contentImg);
+
+        contentSection.appendChild(contentImg);
+
+        hideLoadingMessage();
+      }, 1000);
+
+
 
   }
 
 
   function showLoadingMessage(){
+
     let contentSection = document.querySelector('.modal-body');
     let loading = document.createElement('div');
     loading.classList.add('loader');
 
+    let pokeballContainer = document.createElement('div');
+    pokeballContainer.classList.add('pokeball-container');
+    let pokeball = document.createElement('div');
+    pokeball.classList.add('pokeball');
+
+
     contentSection.appendChild(loading);
+    loading.appendChild(pokeballContainer);
+    pokeballContainer.appendChild(pokeball);
   }
 
   function hideLoadingMessage(){
